@@ -4,7 +4,8 @@ createApp({
   data() {
     return {
       activeImage: 0,
-
+      hover: true,
+      imgScroll: null,
       // slides[1].image
       slides: [
         {
@@ -35,22 +36,62 @@ createApp({
       ],
     };
   },
+  /*   mounted() {
+    console.log("slides", slides);
+  }, */
   methods: {
     //andare avanti e indietro con le immagini
     next() {
-      console.log("next");
       this.activeImage++;
-
       if (this.activeImage > this.slides.length - 1) {
         this.activeImage = 0;
       }
     },
     prev() {
-      console.log("prev");
       this.activeImage--;
       if (this.activeImage < 0) {
         this.activeImage = this.slides.length - 1;
       }
     },
+    selectImg(index) {
+      this.activeImage = index;
+      const selectedImg = this.slides[this.activeImage];
+      return selectedImg.image;
+    },
+    //evento del mouse
+    startLeave() {
+      if (!this.hover) {
+        this.hover = true;
+        this.startScroll();
+      }
+    },
+    stopScroll() {
+      if (this.hover) {
+        this.hover = false;
+        clearInterval(this.imgScroll);
+      }
+    },
+    startScroll() {
+      imgScroll = setInterval(() => {
+        this.next();
+      }, 3000);
+    },
+  },
+  mounted() {
+    //ho provato a farlo funzionare con un if else
+    /*  let imgScroll;
+    if (this.hover) {
+      this.hover = false;
+      clearInterval(imgScroll);
+      console.log("è entrato 2");
+    } else {
+      console.log("è entrato 1");
+      imgScroll = setInterval(() => {
+        this.next();
+      }, 1000);
+    } */
+    this.startScroll();
+    this.stopScroll();
+    this.startLeave();
   },
 }).mount("#app");

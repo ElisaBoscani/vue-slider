@@ -11,9 +11,9 @@
   <body>
     <div id="app">
       <div class="container">
-        <div class="slider-wrapper" tabindex="0">
-          <div class="item">
-            <img :src="slides[activeImage].image" alt="Spiderman" />
+        <div class="slider-wrapper" tabindex="2">
+          <div class="item" @mouseenter="stopScroll" @mouseleave="startLeave">
+            <img :src="selectImg(activeImage)" alt="Spiderman" />
             <div class="text">
               <h3>{{slides[activeImage].title}}</h3>
               <p>{{slides[activeImage].text}}</p>
@@ -24,8 +24,13 @@
             <div class="prev" @click=" prev()"></div>
             <div class="next" @click=" next()"></div>
             <!-- creo le imagini in maniera dinamica -->
-            <div class="thumb active" v-for="img in slides">
-              <img :src="img.image" alt="Svezia" />
+            <div
+              class="thumb active"
+              v-for="(img, index) in slides"
+              :key="index"
+              @click="selectImg(index)"
+            >
+              <img :src="img.image" :key="index" alt="Svezia" />
             </div>
             <!--  <div class="thumb">
               <img src="./asset/img/02.webp" alt="Ratchet & Clank" />
