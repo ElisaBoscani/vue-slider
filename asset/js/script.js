@@ -60,38 +60,19 @@ createApp({
     },
     //evento del mouse
     startLeave() {
-      if (!this.hover) {
-        this.hover = true;
-        this.startScroll();
-      }
+      this.startScroll();
     },
     stopScroll() {
-      if (this.hover) {
-        this.hover = false;
-        clearInterval(this.imgScroll);
-      }
+      clearInterval(this.imgScroll);
     },
+    //play scroll automatico
     startScroll() {
-      imgScroll = setInterval(() => {
+      this.imgScroll = setInterval(() => {
         this.next();
       }, 3000);
     },
   },
   mounted() {
-    //ho provato a farlo funzionare con un if else
-    /*  let imgScroll;
-    if (this.hover) {
-      this.hover = false;
-      clearInterval(imgScroll);
-      console.log("è entrato 2");
-    } else {
-      console.log("è entrato 1");
-      imgScroll = setInterval(() => {
-        this.next();
-      }, 1000);
-    } */
     this.startScroll();
-    this.stopScroll();
-    this.startLeave();
   },
 }).mount("#app");
